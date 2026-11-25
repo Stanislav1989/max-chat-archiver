@@ -48,7 +48,16 @@ function build() {
     fs.writeFileSync(out, Buffer.from(buf));
     // копия с постоянным именем — удобно для ссылок
     fs.writeFileSync(path.join(DIST, 'max-chat-archiver.xpi'), Buffer.from(buf));
+
+    // чистая папка с тем же содержимым — её удобно подписывать через web-ext sign,
+    // не рискуя затащить в пакет тесты, dist и node_modules
+    const pkgDir = path.join(DIST, 'package');
+    fs.rmSync(pkgDir, { recursive: true, force: true });
+    fs.mkdirSync(pkgDir, { recursive: true });
+    for (const name of FILES) fs.copyFileSync(path.join(ROOT, name), path.join(pkgDir, name));
+
     console.log('собрано: ' + out + ' (' + buf.byteLength + ' байт), версия ' + manifest.version);
+    console.log('для подписи: dist/package/');
   });
 }
 

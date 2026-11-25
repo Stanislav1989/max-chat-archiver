@@ -21,11 +21,11 @@
 Обычный Firefox ставит на постоянной основе **только подписанные** дополнения. Подпись бесплатная, делается один раз:
 
 1. Зарегистрируйтесь на [addons.mozilla.org](https://addons.mozilla.org/developers/) и получите ключи API: [AMO → API Keys](https://addons.mozilla.org/developers/addon/api/key/). Нужны `JWT issuer` и `JWT secret`.
-2. Соберите архив: `npm run build` → появится `dist/max-chat-archiver-1.2.0.xpi`.
+2. Соберите архив: `npm run build` → появится `dist/max-chat-archiver-1.2.0.xpi` и чистая папка `dist/package/` для подписи.
 3. Подпишите в режиме self-distribution (расширение не публикуется в каталоге, только подписывается):
 
    ```
-   npx web-ext@8 sign --channel=unlisted --source-dir . --artifacts-dir dist/signed \
+   npx web-ext@8 sign --channel=unlisted --source-dir dist/package --artifacts-dir dist/signed \
      --api-key=ВАШ_JWT_ISSUER --api-secret=ВАШ_JWT_SECRET
    ```
 
