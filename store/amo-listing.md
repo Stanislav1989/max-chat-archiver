@@ -1,5 +1,7 @@
 # Тексты для карточки на addons.mozilla.org
 
+Карточка: https://addons.mozilla.org/ru/firefox/addon/max-chat-archiver/
+
 Готовые формулировки для формы «Отправить новое дополнение». Можно копировать как есть.
 
 ## Название
