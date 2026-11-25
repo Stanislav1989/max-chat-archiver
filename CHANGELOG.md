@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 — 2026-11-25
+
+- Добавлено обязательное для AMO поле `browser_specific_settings.gecko.data_collection_permissions` (`required: ["none"]` — расширение ничего не собирает и не передаёт).
+- `strict_min_version` поднят до 140.0: раньше AMO отклоняет манифест с этим полем.
+- Сборка `.xpi` и папка `dist/package/` для подписи через `web-ext sign`.
+
 ## 1.2.0 — 2026-11-25
 
 ### Добавлено
