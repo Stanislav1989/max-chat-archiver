@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2 — 2026-11-25
+
+- Панель расширения собирается через DOM API вместо `innerHTML` — снято предупреждение AMO «Unsafe assignment to innerHTML».
+- `strict_min_version` поднят до 142.0: на Android свойство `data_collection_permissions` поддерживается с 142, предупреждение валидатора убрано.
+- Валидация AMO проходит без ошибок и без предупреждений.
+
 ## 1.2.1 — 2026-11-25
 
 - Добавлено обязательное для AMO поле `browser_specific_settings.gecko.data_collection_permissions` (`required: ["none"]` — расширение ничего не собирает и не передаёт).

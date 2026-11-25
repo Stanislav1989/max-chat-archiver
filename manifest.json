@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
   "name": "MAX Chat Archiver",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Сохраняет переписку чата MAX (web.max.ru) целиком: все сообщения с начала истории и все файлы — в один HTML-архив.",
   "browser_specific_settings": {
     "gecko": {
       "id": "max-chat-archiver@users.noreply.github.com",
-      "strict_min_version": "140.0",
+      "strict_min_version": "142.0",
       "data_collection_permissions": {
         "required": ["none"]
       }

@@ -134,21 +134,68 @@
     '.hidden{display:none}'
   ].join('\n');
 
-  var PANEL_HTML = [
-    '<style>' + PANEL_CSS + '</style>',
-    '<div class="panel">',
-    '<div class="hdr"><span class="logo">MAX</span><span class="ttl">Chat Archiver</span><button class="x" id="close" title="Свернуть">×</button></div>',
-    '<div class="status" id="status">Готов. Откройте нужный чат.</div>',
-    '<div class="row"><label><input type="checkbox" id="opt-media" checked> скачивать файлы и медиа</label></div>',
-    '<div class="row two">',
-    '<label>макс. файл, МБ <input type="number" id="opt-maxfile" value="100" min="0" step="10"></label>',
-    '<label>лимит архива, МБ <input type="number" id="opt-cap" value="800" min="0" step="100"></label>',
-    '</div>',
-    '<div class="btns"><button class="primary" id="btn-scroll">1. Вся история</button><button id="btn-build">2. Собрать архив</button></div>',
-    '<div class="btns"><button class="ghost" id="btn-diag">Диагностика</button><button class="ghost" id="btn-stop">Стоп</button></div>',
-    '<pre id="log"></pre>',
-    '</div>'
-  ].join('');
+  /* Панель собирается через DOM API, а не через innerHTML: линтер AMO
+     предупреждает о «unsafe assignment to innerHTML» даже для статической строки. */
+  function node(tag, opts) {
+    var n = document.createElement(tag);
+    opts = opts || {};
+    if (opts.cls) n.className = opts.cls;
+    if (opts.id) n.id = opts.id;
+    if (opts.text != null) n.textContent = opts.text;
+    if (opts.title) n.title = opts.title;
+    if (opts.type) n.type = opts.type;
+    if (opts.value != null) n.value = opts.value;
+    if (opts.checked) n.checked = true;
+    for (var a in opts.attrs || {}) {
+      if (Object.prototype.hasOwnProperty.call(opts.attrs, a)) n.setAttribute(a, opts.attrs[a]);
+    }
+    var kids = opts.children || [];
+    for (var i = 0; i < kids.length; i++) if (kids[i]) n.appendChild(kids[i]);
+    return n;
+  }
+
+  function buildPanelDom() {
+    var media = node('input', { type: 'checkbox', id: 'opt-media', checked: true });
+    var maxfile = node('input', { type: 'number', id: 'opt-maxfile', value: '100', attrs: { min: '0', step: '10' } });
+    var cap = node('input', { type: 'number', id: 'opt-cap', value: '800', attrs: { min: '0', step: '100' } });
+
+    return node('div', {
+      cls: 'panel', children: [
+        node('div', {
+          cls: 'hdr', children: [
+            node('span', { cls: 'logo', text: 'MAX' }),
+            node('span', { cls: 'ttl', text: 'Chat Archiver' }),
+            node('button', { cls: 'x', id: 'close', text: '×', title: 'Свернуть' })
+          ]
+        }),
+        node('div', { cls: 'status', id: 'status', text: 'Готов. Откройте нужный чат.' }),
+        node('div', {
+          cls: 'row', children: [
+            node('label', { children: [media, document.createTextNode(' скачивать файлы и медиа')] })
+          ]
+        }),
+        node('div', {
+          cls: 'row two', children: [
+            node('label', { children: [document.createTextNode('макс. файл, МБ '), maxfile] }),
+            node('label', { children: [document.createTextNode('лимит архива, МБ '), cap] })
+          ]
+        }),
+        node('div', {
+          cls: 'btns', children: [
+            node('button', { cls: 'primary', id: 'btn-scroll', text: '1. Вся история' }),
+            node('button', { id: 'btn-build', text: '2. Собрать архив' })
+          ]
+        }),
+        node('div', {
+          cls: 'btns', children: [
+            node('button', { cls: 'ghost', id: 'btn-diag', text: 'Диагностика' }),
+            node('button', { cls: 'ghost', id: 'btn-stop', text: 'Стоп' })
+          ]
+        }),
+        node('pre', { id: 'log' })
+      ]
+    });
+  }
 
   function ensurePanel() {
     if (state.panel && document.contains(state.panel.host)) return state.panel;
@@ -157,7 +204,10 @@
     host.id = 'max-archiver-root';
     host.style.cssText = 'position:fixed;right:18px;bottom:18px;z-index:2147483647;';
     var root = host.attachShadow({ mode: 'open' });
-    root.innerHTML = PANEL_HTML;
+    var style = document.createElement('style');
+    style.textContent = PANEL_CSS;
+    root.appendChild(style);
+    root.appendChild(buildPanelDom());
     (document.body || document.documentElement).appendChild(host);
 
     var el = function (id) { return q(panel, id); };
