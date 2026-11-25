@@ -1,5 +1,8 @@
 # MAX Chat Archiver
 
+[![CI](https://github.com/Stanislav1989/max-chat-archiver/actions/workflows/ci.yml/badge.svg)](https://github.com/Stanislav1989/max-chat-archiver/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Расширение для Firefox, которое сохраняет переписку чата в `web.max.ru` целиком — с начала доступной истории и со всеми вложениями — в один ZIP-архив с `chat.html` в виде обычного чата. Бесплатно, без ограничений на число сообщений, распространяется «как есть».
 
 ![Пример архива](docs/archive-preview.png)
@@ -28,7 +31,7 @@
 
 Так ставится та же сборка, что и в каталоге, просто без ожидания публикации.
 
-1. Скачайте `max-chat-archiver-<версия>.xpi` в разделе **Releases** этого репозитория. Файл подписан Mozilla — это важно, обычный Firefox ставит на постоянной основе только подписанные дополнения.
+1. Скачайте `max-chat-archiver-<версия>.xpi` в разделе [Releases](https://github.com/Stanislav1989/max-chat-archiver/releases). Файл подписан Mozilla — это важно, обычный Firefox ставит на постоянной основе только подписанные дополнения.
 2. В Firefox: `about:addons` → шестерёнка справа сверху → **«Установить дополнение из файла…»** → выберите скачанный `.xpi`.
 3. Перезагрузите вкладку `web.max.ru` — расширение должно загрузиться раньше приложения MAX.
 
