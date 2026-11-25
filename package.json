@@ -1,0 +1,20 @@
+{
+  "name": "max-chat-archiver",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Firefox-расширение: сохраняет переписку MAX (web.max.ru) целиком в HTML-архив",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/test.js && node test/dom.test.js",
+    "lint": "npx --yes web-ext@8 lint --source-dir . --ignore-files \"dist/**\" \"test/**\"",
+    "build": "node scripts/build.js",
+    "demo": "node test/make-demo.js",
+    "e2e": "node test/e2e/run.js"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

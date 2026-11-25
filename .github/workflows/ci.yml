@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Установить зависимости тестов
+        run: npm install --no-save jsdom
+
+      - name: Тесты (извлечение, DOM, ZIP)
+        run: npm test
+
+      - name: Сборка .xpi
+        run: npm run build
+
+      - name: Проверка манифеста (web-ext lint)
+        run: npm run lint
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: max-chat-archiver-xpi
+          path: dist/*.xpi
