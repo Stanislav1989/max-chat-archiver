@@ -1,0 +1,64 @@
+name: Сообщение о проблеме
+description: Что-то не работает или архив получился неполным
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за отчёт. Чем точнее данные, тем быстрее получится починить.
+
+        Перед отправкой: обновите расширение до последней версии и перезагрузите вкладку `web.max.ru`.
+
+  - type: input
+    id: version
+    attributes:
+      label: Версия расширения
+      placeholder: "1.2.2"
+    validations:
+      required: true
+
+  - type: input
+    id: firefox
+    attributes:
+      label: Версия Firefox и ОС
+      placeholder: "Firefox 160, Windows 11"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: На каком шаге проблема
+      options:
+        - Панель не открывается
+        - «1. Вся история» — счётчик не растёт
+        - «1. Вся история» — сообщений меньше, чем в чате
+        - «2. Собрать архив» — ошибка
+        - Файлы не скачиваются
+        - Архив открывается, но текст/разметка неверные
+        - Другое
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: Что произошло
+      description: Что вы сделали, что ожидали и что получилось.
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Лог панели
+      description: Скопируйте текст из нижней части панели расширения.
+      render: text
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Приватность
+      options:
+        - label: Я удалил из лога и вложений чужие персональные данные
+          required: true
